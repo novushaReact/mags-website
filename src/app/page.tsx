@@ -1,5 +1,5 @@
 import HeroSection from "@/components/HeroSection";
-import MarketProblem from "@/components/MarketProblem.tsx";
+import MarketProblem from "@/components/MarketProblem";
 import AvailableSolution from "@/components/AvailableSolution";
 import OurSolution from "@/components/OurSolution";
 import ProductsSection from "@/components/ProductsSection";

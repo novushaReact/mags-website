@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image"; // Add this import
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,7 +63,7 @@ export default function AboutSection() {
               At MAGS, we are redefining the future of aluminium window, door,
               and façade systems with world-class engineering, precision design,
               and uncompromising quality. Since our inception, we have partnered
-              with India’s leading developers, architects, contractors, and
+              with India&apos;s leading developers, architects, contractors, and
               interior designers, delivering solutions that combine aesthetic
               elegance with high-performance functionality.
             </p>
@@ -90,7 +91,7 @@ export default function AboutSection() {
               standards reflects our global approach to quality and safety.
             </p>
             <p className="about-text font-semibold text-gray-900">
-              At MAGS, we don’t just supply aluminium systems — we provide
+              At MAGS, we don&apos;t just supply aluminium systems — we provide
               long-term value, low-maintenance solutions, and architectural
               freedom, enabling our clients to create iconic, future-ready
               spaces.
@@ -104,9 +105,11 @@ export default function AboutSection() {
 
         {/* Image */}
         <div className="about-img relative">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80"
             alt="Modern architecture facade"
+            width={800}
+            height={600}
             className="w-full h-full object-cover rounded-2xl shadow-lg"
           />
         </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
-import ClientWrapper from "@/components/ClientWrapper.tsx";
+import ClientWrapper from "@/components/ClientWrapper";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {

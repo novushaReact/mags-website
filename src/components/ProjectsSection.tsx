@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,13 +91,13 @@ export default function ProjectsSection() {
               className="project-card bg-neutral-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition border border-neutral-700"
             >
               <div className="h-56 bg-neutral-700 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                  width={1200}
-                  height={800}
-                />
+                <Image
+  src={project.image}
+  alt={project.title}
+  width={1200}
+  height={800}
+  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+/>
               </div>
               <div className="p-6">
                 <h3 className="text-2xl font-semibold text-amber-300">

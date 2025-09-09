@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,6 +39,8 @@ const images = [
 
 export default function GallerySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -58,6 +61,14 @@ export default function GallerySection() {
     return () => ctx.revert();
   }, []);
 
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
+
+  const handleImageError = (index: number) => {
+    setFailedImages((prev) => new Set(prev).add(index));
+  };
+
   return (
     <section ref={sectionRef} className="relative w-full bg-gray-50 py-20 px-6">
       <div className="max-w-7xl mx-auto text-center mb-16">
@@ -72,25 +83,53 @@ export default function GallerySection() {
 
       {/* Masonry / Pinterest layout */}
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-        {images.map((src, i) => (
-          <div
-            key={i}
-            className="gallery-item relative overflow-hidden rounded-2xl shadow-lg cursor-pointer break-inside-avoid group"
-          >
-            <img
-              src={src}
-              alt={`Gallery ${i}`}
-              className="w-full h-auto transform transition-transform duration-500 group-hover:scale-110"
-            />
-            {/* Overlay hover effect */}
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-              <span className="text-white text-lg font-semibold tracking-wide">
-                View Project
-              </span>
+        {images.map((src, i) => {
+          // Skip rendering if image failed to load
+          if (failedImages.has(i)) {
+            return null;
+          }
+
+          return (
+            <div
+              key={i}
+              className="gallery-item relative overflow-hidden rounded-2xl shadow-lg cursor-pointer break-inside-avoid group"
+            >
+              <Image
+                src={src}
+                alt={`Gallery ${i}`}
+                width={400}
+                height={600}
+                className="w-full h-auto transform transition-transform duration-500 group-hover:scale-110"
+                onLoad={() => handleImageLoad(i)}
+                onError={() => handleImageError(i)}
+              />
+              {/* Overlay hover effect */}
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <span className="text-white text-lg font-semibold tracking-wide">
+                  View Project
+                </span>
+              </div>
+
+              {/* Loading skeleton */}
+              {!loadedImages.has(i) && !failedImages.has(i) && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-2xl flex items-center justify-center">
+                  <div className="w-8 h-8 border-2 border-gray-400 border-t-gray-600 rounded-full animate-spin"></div>
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      {/* Fallback message if all images fail */}
+      {failedImages.size === images.length && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">
+            Unable to load gallery images. Please check your internet
+            connection.
+          </p>
+        </div>
+      )}
     </section>
   );
 }

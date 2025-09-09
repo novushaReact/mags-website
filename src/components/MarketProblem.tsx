@@ -3,8 +3,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
+
 
 export default function MarketProblem() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -13,9 +15,10 @@ export default function MarketProblem() {
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray(".fade-up");
 
-      items.forEach((item: any, i) => {
+      items.forEach((item: unknown, i: number) => {
+        const element = item as HTMLElement;
         gsap.fromTo(
-          item,
+          element,
           { opacity: 0, y: 50 },
           {
             opacity: 1,
@@ -24,7 +27,7 @@ export default function MarketProblem() {
             delay: i * 0.2,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: item,
+              trigger: element,
               start: "top 85%",
               toggleActions: "play none none reverse",
             },
@@ -57,9 +60,11 @@ export default function MarketProblem() {
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden shadow-2xl">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop"
               alt="Architects and builders collaborating"
+              width={600}
+              height={400}
               className="w-full h-72 object-cover"
             />
           </div>
@@ -69,9 +74,11 @@ export default function MarketProblem() {
         <div className="fade-up grid md:grid-cols-2 gap-10 items-center">
           <div className="order-2 md:order-1">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200&auto=format&fit=crop"
                 alt="Modern building with glass facades"
+                width={600}
+                height={400}
                 className="w-full h-72 object-cover"
               />
             </div>
@@ -110,9 +117,11 @@ export default function MarketProblem() {
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden shadow-2xl">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1628592102751-ba83b0314276?q=80&w=1200&auto=format&fit=crop"
               alt="Precision aluminum glazing systems"
+              width={600}
+              height={400}
               className="w-full h-72 object-cover"
             />
           </div>

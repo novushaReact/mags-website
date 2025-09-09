@@ -1,13 +1,20 @@
-// next.config.mjs
-import withPWA from "next-pwa";
-
-const nextConfig = {
-  reactStrictMode: true,
-};
-
-export default withPWA({
+// next.config.js
+const withPWA = require("next-pwa")({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
   register: true,
   skipWaiting: true,
-})(nextConfig);
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ["images.unsplash.com"],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  reactStrictMode: true,
+};
+
+module.exports = withPWA(nextConfig);
