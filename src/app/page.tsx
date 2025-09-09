@@ -20,8 +20,8 @@ export default function HomePage() {
       <ProjectsSection />
       <TestimonialsSection />
       <GallerySection />
-      {/* <AboutSection />
-      <ContactSection /> */}
+      <AboutSection />
+      <ContactSection />
     </main>
   );
 }
